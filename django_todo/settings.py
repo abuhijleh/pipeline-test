@@ -14,7 +14,7 @@ from pathlib import Path
 import dj_database_url
 import os
 
-environment = os.environ.get('ENVIRONMENT','Dev')
+environment = os.environ.get('ENVIRONMENT', 'dev')
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -42,7 +42,7 @@ if environment == 'dev':
     }
     DEBUG = True
     ALLOWED_HOSTS = []
-else
+else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
     }
