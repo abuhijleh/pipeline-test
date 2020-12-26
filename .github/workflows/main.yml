@@ -1,5 +1,16 @@
 name: First CI/CD workflow
 
+## Actions to consider:
+# Django Migration Checker
+# Django Security Check
+# python Django Coverage GithubAction
+# Coveralls Python
+#python-flake8
+# python linter
+# SonarCloud Scan
+# Secret Scan
+#Heroku Review App Deployment Status
+
 on:
   #push:
   #  branches: [ master ]
@@ -28,12 +39,7 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
-        
-    - name: Django Coverage action
-      uses: actions/python-django-coverage-gitHub-action@0.9
-      with:
-        django-app: 'django_todo'
-        minimum-coverage: '80'
+
   #Test Review apps      
   review-app:
     needs: build
@@ -41,7 +47,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Heroku Review Application
-        uses: mheap/github-action-pr-heroku-review-app@master
+        uses: mheap/github-action-pr-heroku-review-app@v1
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           HEROKU_API_TOKEN: 	${{secrets.HEROKU_API_KEY}}
