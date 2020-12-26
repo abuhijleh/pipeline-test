@@ -41,13 +41,8 @@ jobs:
         heroku_email: "abuhijleh@abuhijleh.net"
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "pipeline-test-001"  
-        branch: "heroku/master"
-    - name: Git remote and status
-      run: |
-        git remote -v   
-    - name: Git status
-      run: |
-        git status  
+        justlogin: ture
+ 
   
   
   
