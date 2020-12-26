@@ -2,10 +2,10 @@
 name: First CI/CD workflow
 
 on:
-  push:
-    branches: [ master ]
-  #pull_request:
+  #push:
   #  branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -31,6 +31,7 @@ jobs:
         python manage.py test
         
   review-app:
+    needs: build
     name: Heroku Review Application
     runs-on: ubuntu-latest
     steps:
