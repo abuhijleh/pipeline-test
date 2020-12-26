@@ -38,6 +38,9 @@ jobs:
       # You may pin to the exact commit or the version.
       # uses: niteoweb/reviewapps-deploy-status@82f706f07b4acd9ebb031f1eac2bd9c0fd82f159
       uses: niteoweb/reviewapps-deploy-status@v1.4.0
+      env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+           HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
       
   #Test Review apps 
   # UNFORTUNATELY. THIS IS ONLY FOR NODE!!!! We might create the DJANGO later     
