@@ -39,13 +39,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Heroku Review Application
-        uses: mheap/github-action-pr-heroku-review-app@master
+        uses: mheap/github-action-pr-heroku-review-app@v1
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           HEROKU_API_TOKEN: 	${{ secrets.HEROKU_API_KEY }}
           HEROKU_PIPELINE_ID: "pipeline-test-001"
           #ENVIRONMENT: "dev"
-          #HEROKU_HOSTNAME: ".herokuapp.com"   
+           #HEROKU_HOSTNAME: ".herokuapp.com"   
       - name: Heroku Build Logs
         #### SHOULD GIT THE LOGS IF IT FAILED
         if: ${{ failure() }}
