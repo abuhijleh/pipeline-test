@@ -1,15 +1,8 @@
 name: First CI/CD workflow
+#### ADD things to workflow
+#### 2 tyings to fix: the Static files and the Variables for allowed hosts
+### Lint, Security, Secret Scanning ...etc
 
-## Actions to consider:
-# Django Migration Checker
-# Django Security Check
-# python Django Coverage GithubAction
-# Coveralls Python
-#python-flake8
-# python linter
-# SonarCloud Scan
-# Secret Scan
-#Heroku Review App Deployment Status
 
 on:
   #push:
@@ -39,7 +32,6 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
-
   #Test Review apps      
   review-app:
     needs: build
@@ -47,11 +39,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Heroku Review Application
-        uses: mheap/github-action-pr-heroku-review-app@v1
+        uses: mheap/github-action-pr-heroku-review-app@master
         env:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           HEROKU_API_TOKEN: 	${{secrets.HEROKU_API_KEY}}
           HEROKU_PIPELINE_ID: "pipeline-test-001"
+        
           
 
   staging:
@@ -78,6 +71,7 @@ jobs:
         heroku_email: "abuhijleh@abuhijleh.net"
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "pipeline-test-001" 
+      
  
 
   
