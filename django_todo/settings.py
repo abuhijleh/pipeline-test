@@ -56,7 +56,7 @@ if environment == 'dev':
         }
     }
     DEBUG = True
-    ALLOWED_HOSTS = [*]
+    ALLOWED_HOSTS = ['*']
 else:
     DATABASES = {
         'default': dj_database_url.parse(os.environ.get('DATABASE_URL'))
