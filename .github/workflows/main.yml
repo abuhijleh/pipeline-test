@@ -45,7 +45,7 @@ jobs:
           HEROKU_API_TOKEN: 	${{secrets.HEROKU_API_KEY}}
           HEROKU_PIPELINE_ID: "pipeline-test-001"
           ENVIRONMENT: "dev"
-          HEROKU_HOSTNAME: ".herokuapp.com":  
+          HEROKU_HOSTNAME: ".herokuapp.com" 
         
           
 
