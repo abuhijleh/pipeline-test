@@ -32,8 +32,8 @@ jobs:
     - name: Django Coverage action
       uses: actions/python-django-coverage-gitHub-action@0.9
       with:
-        django-app: 'dgango_todo'
-        minimum-coverage: '86'
+        django-app: 'django_todo'
+        minimum-coverage: '80'
   #Test Review apps      
   review-app:
     needs: build
