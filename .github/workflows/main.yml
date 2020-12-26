@@ -29,6 +29,17 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
+        
+  review-app:
+    name: Heroku Review Application
+    runs-on: ubuntu-latest
+    steps:
+      - name: Heroku Review Application
+        uses: mheap/github-action-pr-heroku-review-app@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEROKU_API_TOKEN: 	${{secrets.HEROKU_API_KEY}}
+          HEROKU_PIPELINE_ID: "pipeline-test-001"
 
   release:
    needs: build
