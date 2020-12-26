@@ -2,6 +2,7 @@ name: First CI/CD workflow
 #### ADD things to workflow
 #### 2 tyings to fix: the Static files and the Variables for allowed hosts
 ### Lint, Security, Secret Scanning ...etc
+### attach log on Build Log failure
 
 
 on:
@@ -41,12 +42,18 @@ jobs:
       - name: Heroku Review Application
         uses: mheap/github-action-pr-heroku-review-app@master
         env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-          HEROKU_API_TOKEN: 	${{secrets.HEROKU_API_KEY}}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEROKU_API_TOKEN: 	${{ secrets.HEROKU_API_KEY }}
           HEROKU_PIPELINE_ID: "pipeline-test-001"
-          ENVIRONMENT: "dev"
-          HEROKU_HOSTNAME: ".herokuapp.com" 
-        
+          #ENVIRONMENT: "dev"
+          #HEROKU_HOSTNAME: ".herokuapp.com" 
+      - name: Heroku Build Logs
+        #### SHOULD GIT THE LOGS IF IT FAILED
+        uses: mheap/github-action-heroku-logs@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+         
           
 
   staging:
