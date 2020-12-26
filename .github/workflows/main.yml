@@ -32,27 +32,35 @@ jobs:
     - name: Run Tests
       run: |
         python manage.py test
-  #Test Review apps      
-  review-app:
-    needs: build
-    name: Heroku Review Application
-    runs-on: ubuntu-latest
-    steps:
-      - name: Heroku Review Application
-        uses: mheap/github-action-pr-heroku-review-app@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEROKU_API_TOKEN: 	${{ secrets.HEROKU_API_KEY }}
-          HEROKU_PIPELINE_ID: "pipeline-test-001"
-          #ENVIRONMENT: "dev"
-          #HEROKU_HOSTNAME: ".herokuapp.com"   
-      - name: Heroku Build Logs
-        #### SHOULD GIT THE LOGS IF IT FAILED
-        if: ${{ failure() }}
-        uses: mheap/github-action-heroku-logs@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+
+
+    - name: Heroku Review App Deployment Status
+      # You may pin to the exact commit or the version.
+      # uses: niteoweb/reviewapps-deploy-status@82f706f07b4acd9ebb031f1eac2bd9c0fd82f159
+      uses: niteoweb/reviewapps-deploy-status@v1.4.0
+      
+  #Test Review apps 
+  # UNFORTUNATELY. THIS IS ONLY FOR NODE!!!! We might create the DJANGO later     
+  # review-app:
+  #   needs: build
+  #   name: Heroku Review Application
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Heroku Review Application
+  #       uses: mheap/github-action-pr-heroku-review-app@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         HEROKU_API_TOKEN: 	${{ secrets.HEROKU_API_KEY }}
+  #         HEROKU_PIPELINE_ID: "pipeline-test-001"
+  #         #ENVIRONMENT: "dev"
+  #         #HEROKU_HOSTNAME: ".herokuapp.com"   
+  #     - name: Heroku Build Logs
+  #       #### SHOULD GIT THE LOGS IF IT FAILED
+  #       if: ${{ failure() }}
+  #       uses: mheap/github-action-heroku-logs@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #         HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
          
           
 
@@ -67,6 +75,13 @@ jobs:
         heroku_email: "abuhijleh@abuhijleh.net"
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "pipeline-test-001" 
+    - name: Heroku Build Logs
+      #### SHOULD GIT THE LOGS IF IT FAILED
+      if: ${{ failure() }}
+      uses: mheap/github-action-heroku-logs@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
 
   production:
    needs: staging
@@ -79,7 +94,15 @@ jobs:
       with:
         heroku_email: "abuhijleh@abuhijleh.net"
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "pipeline-test-001" 
+        heroku_app_name: "pipeline-test-001"
+        
+    - name: Heroku Build Logs
+      #### SHOULD GIT THE LOGS IF IT FAILED
+      if: ${{ failure() }}
+      uses: mheap/github-action-heroku-logs@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
       
  
 
