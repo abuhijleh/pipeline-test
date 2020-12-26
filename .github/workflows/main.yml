@@ -45,20 +45,14 @@ jobs:
           HEROKU_API_TOKEN: 	${{ secrets.HEROKU_API_KEY }}
           HEROKU_PIPELINE_ID: "pipeline-test-001"
           #ENVIRONMENT: "dev"
-          #HEROKU_HOSTNAME: ".herokuapp.com" 
-  
-  heroku-build-logs:
-    ##### You need to introduce this to the students. So that it always works
-    if: always()
-    name: Heroku Build Logs
-    runs-on: ubuntu-latest
-    steps:
-    - name: Heroku Build Logs
-      #### SHOULD GIT THE LOGS IF IT FAILED
-      uses: mheap/github-action-heroku-logs@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+          #HEROKU_HOSTNAME: ".herokuapp.com"   
+      - name: Heroku Build Logs
+        #### SHOULD GIT THE LOGS IF IT FAILED
+        if: ${{ failure() }}
+        uses: mheap/github-action-heroku-logs@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
          
           
 
