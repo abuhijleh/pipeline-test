@@ -54,7 +54,7 @@ jobs:
         heroku_email: "abuhijleh@abuhijleh.net"
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "pipeline-test-001"  
-        justlogin: ture
+        DISABLE_COLLECTSTATIC: 1  
  
   
   
