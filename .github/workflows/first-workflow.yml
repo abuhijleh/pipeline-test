@@ -30,7 +30,12 @@ jobs:
       run: |
         python manage.py test
       
-      
+    - name: Deploy Deploy to Heroku
+      uses: CDNievas/heroku-action@v1.0 # This is the action
+      with:
+        heroku_email: "abuhijleh@abuhijleh.net"
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "pipeline-test-001"       
   
   
   
