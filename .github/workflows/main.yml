@@ -42,7 +42,7 @@ jobs:
           HEROKU_PIPELINE_ID: "pipeline-test-001"
           
 
-  release:
+  staging:
    needs: build
    runs-on: ubuntu-latest
    steps:
@@ -53,8 +53,21 @@ jobs:
         heroku_email: "abuhijleh@abuhijleh.net"
         heroku_api_key: ${{secrets.HEROKU_API_KEY}}
         heroku_app_name: "pipeline-test-001" 
+
+  production:
+   needs: staging
+   runs-on: ubuntu-latest
+   steps:
+    - name: Promote to production
+    # You may pin to the exact commit or the version.
+    # uses: tiltshift/heroku-promote-app@342a661f8c6451e34e9eca0b435d3f2953aa33bc
+      uses: tiltshift/heroku-promote-app@v1
+      with:
+        heroku_email: "abuhijleh@abuhijleh.net"
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "pipeline-test-001" 
  
-  
+
   
   
 #   name: Test and release
