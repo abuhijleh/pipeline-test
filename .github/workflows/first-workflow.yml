@@ -1,5 +1,5 @@
 
-name: Django CI
+name: First CI/CD workflow
 
 on:
   #push:
