@@ -3,6 +3,7 @@ name: First CI/CD workflow
 #### 2 tyings to fix: the Static files and the Variables for allowed hosts
 ### Lint, Security, Secret Scanning ...etc
 ### attach log on Build Log failure
+### JEST, OSASP BASE SCAN
 
 
 on:
