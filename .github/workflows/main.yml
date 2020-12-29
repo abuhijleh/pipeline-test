@@ -9,8 +9,8 @@ name: First CI/CD workflow
 
 
 on:
-  #push:
-  #  branches: [ master ]
+  push:
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
@@ -36,6 +36,16 @@ jobs:
       run: |
         python manage.py test
 
+    - name: Analyze with SonarCloud
+      uses: sonarsource/sonarcloud-github-action@master
+      with:
+        args: >
+          -Dsonar.organization="abuhijleh"
+          -Dsonar.projectKey=my-"pipeline-test"
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
 
     - name: Heroku Review App Deployment Status
       # You may pin to the exact commit or the version.
@@ -45,30 +55,7 @@ jobs:
            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
            HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
       
-  #Test Review apps 
-  # UNFORTUNATELY. THIS IS ONLY FOR NODE!!!! We might create the DJANGO later     
-  # review-app:
-  #   needs: build
-  #   name: Heroku Review Application
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - name: Heroku Review Application
-  #       uses: mheap/github-action-pr-heroku-review-app@master
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         HEROKU_API_TOKEN: 	${{ secrets.HEROKU_API_KEY }}
-  #         HEROKU_PIPELINE_ID: "pipeline-test-001"
-  #         #ENVIRONMENT: "dev"
-  #         #HEROKU_HOSTNAME: ".herokuapp.com"   
-  #     - name: Heroku Build Logs
-  #       #### SHOULD GIT THE LOGS IF IT FAILED
-  #       if: ${{ failure() }}
-  #       uses: mheap/github-action-heroku-logs@master
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #         HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
-         
-          
+   
 
   staging:
    needs: build
