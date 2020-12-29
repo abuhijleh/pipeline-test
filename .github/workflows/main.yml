@@ -5,6 +5,7 @@ name: First CI/CD workflow
 ### attach log on Build Log failure
 ### JEST, OSASP BASE SCAN, FLAKE8, "is website vulnerable","GitHub Project Connect Action", "
 ### GitHub Project Connect Action", "Starting Selenoid Server"
+### WhiteSource Unified Agent,
 
 
 on:
