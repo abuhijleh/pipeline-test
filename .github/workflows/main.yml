@@ -44,16 +44,6 @@ jobs:
       run: |
         python manage.py test
 
-    
-    # - uses: actions/checkout@v2
-    #   with:
-    #     fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
-    # - name: SonarCloud Scan
-    #   uses: SonarSource/sonarcloud-github-action@master
-    #   env:
-    #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-    #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
     - uses: actions/setup-python@v2
       with:
         python-version: ${{ matrix.python-version }}
@@ -63,9 +53,7 @@ jobs:
         checkName: "Python Lint"
         path: "todo"
 
-      #env:
-      #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+    
     #### Ensure that we've stops automatic scanning
     #### we need to define the quality gates. 
     #### build a custom Quality gate
@@ -81,8 +69,8 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
-############## Additional Security Check 
-############# https://github.com/marketplace/actions/django-security-check   
+    ############## Additional Security Check 
+    ############# https://github.com/marketplace/actions/django-security-check   
     - name: Scan Django settings for security issues
       id: check
       uses: victoriadrake/django-security-check@master
@@ -98,8 +86,7 @@ jobs:
         APP_PATH: /
 
 
-    ###VeraCode
-
+    ###Source Bolt is an application
 
     # - name: Heroku Review App Deployment Status
     #   # You may pin to the exact commit or the version.
@@ -111,24 +98,45 @@ jobs:
       
    
 
-  # staging:
-  #  needs: build
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #   - uses: actions/checkout@v2      
-  #   - name: Deploy Deploy to Heroku
-  #     uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
-  #     with:
-  #       heroku_email: "abuhijleh@abuhijleh.net"
-  #       heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-  #       heroku_app_name: "pipeline-test-001" 
-  #   - name: Heroku Build Logs
-  #     #### SHOULD GIT THE LOGS IF IT FAILED
-  #     if: ${{ failure() }}
-  #     uses: mheap/github-action-heroku-logs@master
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+  staging-deploy:
+   needs: build
+   runs-on: ubuntu-latest
+   steps:
+    - uses: actions/checkout@v2      
+    - name: Deploy Deploy to Heroku
+      uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
+      with:
+        heroku_email: "abuhijleh@abuhijleh.net"
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "pipeline-test-001" 
+    - name: Heroku Build Logs
+      #### SHOULD GIT THE LOGS IF IT FAILED
+      if: ${{ failure() }}
+      uses: mheap/github-action-heroku-logs@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+  
+
+  #### Run Penetration Test
+  #### WE need to wait
+  staging-pentest:
+    runs-on: ubuntu-latest
+    steps:
+      ####### SLEEP TILL THE APPLICATION IS DEPLOYED
+      - name: Sleep for 2m
+        uses: jakejarvis/wait-action@master
+        with:
+          time: '2m'
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          ref: master
+      - name: ZAP Scan
+        uses: zaproxy/action-baseline@v0.4.0
+        with:
+          ## THis should be Environment Variable not here.
+          target: 'https://pipeline-test-001.herokuapp.com'
 
   # production:
   #  needs: staging
