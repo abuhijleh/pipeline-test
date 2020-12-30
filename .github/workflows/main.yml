@@ -19,11 +19,6 @@ on:
 
 ####THese are for the Django Security Cech
 env:
-  FAIL_LEVEL: WARNING
-  ENV_TYPE: venv
-  DEP_PATH: app/requirements.txt
-  APP_PATH: app/
-
   ### Direct them the rather than repeating they can add here
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -85,7 +80,8 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
 
-############## Additional Security Check    
+############## Additional Security Check 
+############# https://github.com/marketplace/actions/django-security-check   
     - name: Scan Django settings for security issues
       id: check
       uses: victoriadrake/django-security-check@master
@@ -94,6 +90,12 @@ jobs:
       with:
         name: security-check-output
         path: output.txt
+      env:
+        FAIL_LEVEL: WARNING
+        ENV_TYPE: venv
+        DEP_PATH: requirements.txt
+        APP_PATH: /
+
 
 
 
