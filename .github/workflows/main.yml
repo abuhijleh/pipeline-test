@@ -8,6 +8,7 @@ name: First CI/CD workflow
 ### WhiteSource Unified Agent,
 
 
+
 on:
   push:
     branches: [ master ]
@@ -47,19 +48,20 @@ jobs:
     #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
     #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
-      - uses: actions/setup-python@v2
-        with:
-          python-version: ${{ matrix.python-version }}
-      - name: Run flake8
-        uses: julianwachholz/flake8-action@v1.1.0
-        with:
-          checkName: "Python Lint"
-          path:todo
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/setup-python@v2
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Run flake8
+      uses: julianwachholz/flake8-action@v1.1.0
+      with:
+        checkName: "Python Lint"
+        path:todo
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     #### Ensure that we've stops automatic scanning
     #### we need to define the quality gates. 
+    #### build a custom Quality gate
     - name: Analyze with SonarCloud
       uses: sonarsource/sonarcloud-github-action@master
       with:
