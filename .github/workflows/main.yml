@@ -9,11 +9,11 @@ name: First CI/CD workflow
 
 
 on:
-  #push:
-  #  branches: [ master ]
-  
-  pull_request:
+  push:
     branches: [ master ]
+  
+  #pull_request:
+   # branches: [ master ]
 
 jobs:
   build:
@@ -42,7 +42,7 @@ jobs:
       with:
         args: >
           -Dsonar.organization="abuhijleh"
-          -Dsonar.projectKey=my-"pipeline-test"
+          -Dsonar.projectKey="pipeline-test"
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
@@ -58,45 +58,45 @@ jobs:
       
    
 
-  staging:
-   needs: build
-   runs-on: ubuntu-latest
-   steps:
-    - uses: actions/checkout@v2      
-    - name: Deploy Deploy to Heroku
-      uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
-      with:
-        heroku_email: "abuhijleh@abuhijleh.net"
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "pipeline-test-001" 
-    - name: Heroku Build Logs
-      #### SHOULD GIT THE LOGS IF IT FAILED
-      if: ${{ failure() }}
-      uses: mheap/github-action-heroku-logs@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+  # staging:
+  #  needs: build
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #   - uses: actions/checkout@v2      
+  #   - name: Deploy Deploy to Heroku
+  #     uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
+  #     with:
+  #       heroku_email: "abuhijleh@abuhijleh.net"
+  #       heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #       heroku_app_name: "pipeline-test-001" 
+  #   - name: Heroku Build Logs
+  #     #### SHOULD GIT THE LOGS IF IT FAILED
+  #     if: ${{ failure() }}
+  #     uses: mheap/github-action-heroku-logs@master
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
 
-  production:
-   needs: staging
-   runs-on: ubuntu-latest
-   steps:
-    - name: Promote to production
-    # You may pin to the exact commit or the version.
-    # uses: tiltshift/heroku-promote-app@342a661f8c6451e34e9eca0b435d3f2953aa33bc
-      uses: tiltshift/heroku-promote-app@v1
-      with:
-        heroku_email: "abuhijleh@abuhijleh.net"
-        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-        heroku_app_name: "pipeline-test-001"
+  # production:
+  #  needs: staging
+  #  runs-on: ubuntu-latest
+  #  steps:
+  #   - name: Promote to production
+  #   # You may pin to the exact commit or the version.
+  #   # uses: tiltshift/heroku-promote-app@342a661f8c6451e34e9eca0b435d3f2953aa33bc
+  #     uses: tiltshift/heroku-promote-app@v1
+  #     with:
+  #       heroku_email: "abuhijleh@abuhijleh.net"
+  #       heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+  #       heroku_app_name: "pipeline-test-001"
         
-    - name: Heroku Build Logs
-      #### SHOULD GIT THE LOGS IF IT FAILED
-      if: ${{ failure() }}
-      uses: mheap/github-action-heroku-logs@master
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
+  #   - name: Heroku Build Logs
+  #     #### SHOULD GIT THE LOGS IF IT FAILED
+  #     if: ${{ failure() }}
+  #     uses: mheap/github-action-heroku-logs@master
+  #     env:
+  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+  #       HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
       
  
 
