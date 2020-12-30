@@ -62,6 +62,11 @@ jobs:
       with:
         checkName: "Python Lint"
         path: "todo"
+    - name: Upload output
+      uses: actions/upload-artifact@v2
+      with:
+        name: Flake8-output
+        path: output.txt
       #env:
       #  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
