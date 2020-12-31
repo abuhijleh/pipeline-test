@@ -82,22 +82,23 @@ jobs:
 
 
 
-    ############## Additional Security Check 
+    ############## Bandit
     ############# https://github.com/marketplace/actions/django-security-check   
-    - name: Scan Django settings for security issues
-      id: check
-      uses: victoriadrake/django-security-check@master
-    - name: Upload output
-      uses: actions/upload-artifact@v2
-      with:
-        name: security-check-output
-        path: output.txt
-      env:
-        FAIL_LEVEL: WARNING
-        ENV_TYPE: venv
-        DEP_PATH: requirements.txt
-        APP_PATH: /
+    - uses: actions/checkout@v2
 
+    - name: Security check - Bandit
+      uses: ./
+      with:
+        python_version: ${{ matrix.python-version }}
+        project_path: .
+        ignore_failure: true
+
+    - name: Security check report artifacts
+      uses: actions/upload-artifact@v1
+      # if: failure()
+      with:
+        name: Security report
+        path: output/security_report.txt
 
     ###Source Bolt is an application
 
