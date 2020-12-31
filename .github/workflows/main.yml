@@ -121,6 +121,7 @@ jobs:
   #### Run Penetration Test
   #### WE need to wait
   staging-pentest:
+    needs: staging-deploy
     runs-on: ubuntu-latest
     steps:
       ####### SLEEP TILL THE APPLICATION IS DEPLOYED
