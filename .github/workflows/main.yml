@@ -84,8 +84,6 @@ jobs:
 
     ############## Bandit
     ############# https://github.com/marketplace/actions/django-security-check   
-    - uses: actions/checkout@v2
-
     - name: Security check - Bandit
       uses: ./
       with:
