@@ -106,6 +106,16 @@ jobs:
 
     ############## Bandit
     ############# https://github.com/marketplace/actions/django-security-check   
+  Security-scan:
+    runs-on: ubuntu-latest
+    strategy:
+      max-parallel: 4
+      matrix:
+        python-version: [3.6] #[3.6, 3.7, 3.8]
+        language: [ 'python' ]
+
+    steps:
+    - uses: actions/checkout@v2
     - name: Security check - Bandit
       uses: ./
       with:
