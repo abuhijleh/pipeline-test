@@ -81,25 +81,26 @@ jobs:
       uses: github/codeql-action/analyze@v1
 
 
-      #### 
-    - name: 42Crunch REST API Static Security Testing
-      # You may pin to the exact commit or the version.
-      # uses: 42Crunch/api-security-audit-action@48f468ee3cbd6ef8e5d8307fba9177ac0f6b87b2
-      # First create collection
-      uses: 42Crunch/api-security-audit-action@v1
-      with:
-        # The API token to access 42Crunch Platform. Please create free account at https://platform.42crunch.com/register and follow hese steps to configure API_TOKEN https://docs.42crunch.com/latest/content/tasks/integrate_github_actions.htm
-        api-token: "23982d54-8343-4507-99d5-0218c9d20130" # optional
-        # A name for the API collection
-        collection-name: "CI CODE" # optional, default is github
-        # Minimum score for OpenAPI files.
-        min-score: 75 # optional, default is 75
-        # 
-        #github-token: # optional, default is ${{ github.token }}
-        # Upload results to Github Code Scanning
-        upload-to-code-scanning: false # optional, default is false
-        # Do not fail the action even if the faiures were detected in the API contract
-        #ignore-failures: # optional, default is false
+    #   #### ONLY USE THIS IF YOU WANT TO USE SWAGGER!!!! 
+    #   ### Maybe in Even Better DevOps we have this
+    # - name: 42Crunch REST API Static Security Testing
+    #   # You may pin to the exact commit or the version.
+    #   # uses: 42Crunch/api-security-audit-action@48f468ee3cbd6ef8e5d8307fba9177ac0f6b87b2
+    #   # First create collection
+    #   uses: 42Crunch/api-security-audit-action@v1
+    #   with:
+    #     # The API token to access 42Crunch Platform. Please create free account at https://platform.42crunch.com/register and follow hese steps to configure API_TOKEN https://docs.42crunch.com/latest/content/tasks/integrate_github_actions.htm
+    #     api-token: "23982d54-8343-4507-99d5-0218c9d20130" # optional
+    #     # A name for the API collection
+    #     collection-name: "CI CODE" # optional, default is github
+    #     # Minimum score for OpenAPI files.
+    #     min-score: 75 # optional, default is 75
+    #     # 
+    #     #github-token: # optional, default is ${{ github.token }}
+    #     # Upload results to Github Code Scanning
+    #     upload-to-code-scanning: false # optional, default is false
+    #     # Do not fail the action even if the faiures were detected in the API contract
+    #     #ignore-failures: # optional, default is false
 
 
 
@@ -109,11 +110,9 @@ jobs:
       uses: ./
       with:
         python_version: ${{ matrix.python-version }}
-        project_path: .
-        ignore_failure: true
 
     - name: Security check report artifacts
-      uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v1      
       # if: failure()
       with:
         name: Security report
