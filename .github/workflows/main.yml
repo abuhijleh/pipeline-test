@@ -97,7 +97,7 @@ jobs:
         # 
         #github-token: # optional, default is ${{ github.token }}
         # Upload results to Github Code Scanning
-        upload-to-code-scanning: true # optional, default is false
+        upload-to-code-scanning: false # optional, default is false
         # Do not fail the action even if the faiures were detected in the API contract
         #ignore-failures: # optional, default is false
 
