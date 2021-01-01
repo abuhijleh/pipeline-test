@@ -89,9 +89,9 @@ jobs:
       uses: 42Crunch/api-security-audit-action@v1
       with:
         # The API token to access 42Crunch Platform. Please create free account at https://platform.42crunch.com/register and follow hese steps to configure API_TOKEN https://docs.42crunch.com/latest/content/tasks/integrate_github_actions.htm
-        api-token: 9def6695-fcc3-483f-b96d-8d9e007a83f7 # optional
+        api-token: "23982d54-8343-4507-99d5-0218c9d20130" # optional
         # A name for the API collection
-        collection-name: CI # optional, default is github
+        collection-name: "CI CODE" # optional, default is github
         # Minimum score for OpenAPI files.
         min-score: 75 # optional, default is 75
         # 
