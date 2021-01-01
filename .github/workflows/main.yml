@@ -126,6 +126,7 @@ jobs:
       with:
         name: Security report
         path: output/security_report.txt
+        github_token: ${{ secrets.GITHUB_TOKEN }}
 
     ###Source Bolt is an application
 
