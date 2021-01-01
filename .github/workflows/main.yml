@@ -93,7 +93,7 @@ jobs:
         # A name for the API collection
         collection-name: CI # optional, default is github
         # Minimum score for OpenAPI files.
-        min-score: # optional, default is 75
+        min-score: 75 # optional, default is 75
         # 
         github-token: # optional, default is ${{ github.token }}
         # Upload results to Github Code Scanning
