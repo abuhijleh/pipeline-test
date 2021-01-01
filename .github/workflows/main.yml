@@ -95,11 +95,11 @@ jobs:
         # Minimum score for OpenAPI files.
         min-score: 75 # optional, default is 75
         # 
-        github-token: # optional, default is ${{ github.token }}
+        #github-token: # optional, default is ${{ github.token }}
         # Upload results to Github Code Scanning
-        upload-to-code-scanning: # optional, default is false
+        upload-to-code-scanning: true # optional, default is false
         # Do not fail the action even if the faiures were detected in the API contract
-        ignore-failures: # optional, default is false
+        #ignore-failures: # optional, default is false
 
 
 
