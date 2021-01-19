@@ -10,13 +10,13 @@ assignees: ''
 **SCENARIO**
 As a  [...] I want to  [...] , so that I   [...] 
 
-**Definition of Done**
+**Acceptance Criteria**
 * item 1
 * item 2
 * item 3
 
-**Describe alternatives you've considered**
-A clear and concise description of any alternative solutions or features you've considered.
-
-**Additional context**
-Add any other context or screenshots about the feature request here.
+**Tasks**
+- [x] @mentions, #refs, [links](), **formatting**, and <del>tags</del> supported
+- [x] list syntax required (any unordered or ordered list supported)
+- [x] this is a complete item
+- [ ] this is an incomplete item
