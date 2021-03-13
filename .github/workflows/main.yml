@@ -132,7 +132,7 @@ jobs:
    environment: staging
    steps:
     - uses: actions/checkout@v2      
-    - name: Deploy Deploy to Heroku
+    - name: Deploy to Heroku - Staging Environment
       uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
       with:
         heroku_email: "abuhijleh@abuhijleh.net"
@@ -168,27 +168,25 @@ jobs:
           ## THis should be Environment Variable not here.
           target: 'https://pipeline-test-001.herokuapp.com'
 
-  # production:
-  #  needs: staging
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #   - name: Promote to production
-  #   # You may pin to the exact commit or the version.
-  #   # uses: tiltshift/heroku-promote-app@342a661f8c6451e34e9eca0b435d3f2953aa33bc
-  #     uses: tiltshift/heroku-promote-app@v1
-  #     with:
-  #       heroku_email: "abuhijleh@abuhijleh.net"
-  #       heroku_api_key: ${{secrets.HEROKU_API_KEY}}
-  #       heroku_app_name: "pipeline-test-001"
-        
-  #   - name: Heroku Build Logs
-  #     #### SHOULD GIT THE LOGS IF IT FAILED
-  #     if: ${{ failure() }}
-  #     uses: mheap/github-action-heroku-logs@master
-  #     env:
-  #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}
-      
+  Production:
+   needs: staging-pentest
+   runs-on: ubuntu-latest
+   environment: production
+   steps:
+    - uses: actions/checkout@v2      
+    - name: Deploy to Heroku - Production Environment
+      uses: akhileshns/heroku-deploy@v3.7.8 # This is the action
+      with:
+        heroku_email: "abuhijleh@abuhijleh.net"
+        heroku_api_key: ${{secrets.HEROKU_API_KEY}}
+        heroku_app_name: "pipeline-production--001" 
+    - name: Heroku Build Logs
+      #### SHOULD GIT THE LOGS IF IT FAILED
+      if: ${{ failure() }}
+      uses: mheap/github-action-heroku-logs@master
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        HEROKU_AUTH_TOKEN: ${{ secrets.HEROKU_API_KEY }}   
  
 
   
